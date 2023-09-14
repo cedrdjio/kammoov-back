@@ -1,0 +1,125 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./src/generated/client"
+}
+
+// Configuration de la source de données MySQL
+datasource db {
+  provider = "mysql"
+  url      = env("MYSQL_URL") // Utilisation de MYSQL_URL pour la connexion
+}
+
+model Agence {
+  id    Int      @id @default(autoincrement())
+  nom   String
+  ville String
+  pays  String
+  buss Bus[]
+  tickets Ticket[]  
+}
+
+// Définition du modèle Bus
+model Bus {
+  id           Int      @id @default(autoincrement())
+  numero       Int
+  modele       String
+  capacite     Int
+  agence_id    Int
+  heure_depart DateTime
+  heure_arrivee DateTime
+  tickets Ticket[]  
+  agence       Agence   @relation(fields: [agence_id], references: [id])
+
+}
+
+// Définition du modèle Ticket
+model Ticket {
+  id              Int      @id @default(autoincrement())
+  matricule       String   @unique
+  prix            Decimal
+  agence_id       Int
+  bus_id          Int
+  place_disponible Int
+  agence          Agence   @relation(fields: [agence_id], references: [id])
+  bus             Bus      @relation(fields: [bus_id], references: [id])
+  reservations    Reservation[]
+  transactions    Transaction[]
+  historiqueTicket HistoriqueTicket[]
+  paiement Paiement[]
+}
+
+// Définition du modèle Utilisateur
+model Utilisateur {
+  id           Int     @id @default(autoincrement())
+  prenom       String
+  nom          String
+  email        String
+  mot_de_passe String
+  reservations Reservation[]
+  transactions Transaction[] 
+  notificationS Notification[] 
+  historiqueTicket HistoriqueTicket[]
+  paiement Paiement[]
+}
+model Image {
+  id           Int     @id @default(autoincrement())
+  nom_fichier  String
+  chemin       String
+  type         String
+  taille       Int
+  description  String?
+}
+
+// Définition du modèle Reservation
+model Reservation {
+  id              Int       @id @default(autoincrement())
+  ticket_id       Int
+  utilisateur_id  Int
+  ticket          Ticket    @relation(fields: [ticket_id], references: [id])
+  utilisateur     Utilisateur @relation(fields: [utilisateur_id], references: [id])
+}
+
+// Définition du modèle Transaction
+model Transaction {
+  id              Int       @id @default(autoincrement())
+  montant         Decimal
+  utilisateur_id  Int
+  ticket_id       Int
+  utilisateur     Utilisateur @relation(fields: [utilisateur_id], references: [id])
+  ticket          Ticket    @relation(fields: [ticket_id], references: [id])
+}
+
+// Définition du modèle Notification
+model Notification {
+  id            Int      @id @default(autoincrement())
+  utilisateur_id Int
+  message       String
+  date_envoi    DateTime
+  utilisateur   Utilisateur @relation(fields: [utilisateur_id], references: [id])
+}
+
+// Définition du modèle HistoriqueTicket
+model HistoriqueTicket {
+  id             Int      @id @default(autoincrement())
+  utilisateur_id Int
+  ticket_id      Int
+  date_achat     DateTime
+  utilisateur    Utilisateur @relation(fields: [utilisateur_id], references: [id])
+  ticket         Ticket  @relation(fields: [ticket_id], references: [id])
+}
+
+// Définition du modèle Paiement
+model Paiement {
+  id            Int      @id @default(autoincrement())
+  montant       Decimal
+  type_paiement String
+  utilisateur_id Int
+  ticket_id      Int
+  utilisateur   Utilisateur @relation(fields: [utilisateur_id], references: [id])
+  ticket        Ticket  @relation(fields: [ticket_id], references: [id])
+}
