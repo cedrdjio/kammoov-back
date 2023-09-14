@@ -4,7 +4,8 @@ https://docs.nestjs.com/controllers#controllers
 */
 
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { AgenceService } from 'src/services/agence.service';
+import { AgenceService } from './agence.service';
+import { IAgence } from 'src/model/iagence';
 
 @Controller('agence')
 export class AgenceController {
@@ -20,12 +21,12 @@ export class AgenceController {
     }
   
     @Post()
-    create(@Body() data: { nom: string; ville: string; pays: string }) {
+    create(@Body() data:IAgence) {
       return this.agencesService.create(data);
     }
   
     @Put(':id')
-    update(@Param('id') id: string, @Body() data: { nom?: string; ville?: string; pays?: string }) {
+    update(@Param('id') id: string, @Body() data: IAgence) {
       return this.agencesService.update(+id, data);
     }
   

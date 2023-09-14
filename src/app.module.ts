@@ -1,13 +1,14 @@
-import { AgenceController } from './controllers/agence.controller';
+import { BusModule } from './components/bus/bus.module';
 import { PrismaService } from './services/prisma.service';
-import { AgenceService } from './services/agence.service';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AgenceModule } from './components/agence/agence.module';
+import { HistoriqueTicketModule } from './components/historique-ticket/historique-ticket.module';
 
 @Module({
-  imports: [],
-  controllers: [AgenceController, AppController],
-  providers: [PrismaService, AgenceService, AppService],
+  imports: [BusModule, AgenceModule, HistoriqueTicketModule],
+  controllers: [AppController],
+  providers: [PrismaService, AppService],
 })
 export class AppModule {}

@@ -4,7 +4,8 @@ https://docs.nestjs.com/providers#services
 */
 // eslint-disable-next-line prettier/prettier
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from './prisma.service';
+import { IAgence } from 'src/model/iagence';
+import { PrismaService } from 'src/services/prisma.service';
 
 @Injectable()
 export class AgenceService {
@@ -20,13 +21,13 @@ export class AgenceService {
         });
       }
     
-      async create(data: { nom: string; ville: string; pays: string }) {
+      async create(data:IAgence) {
         return this.prisma.agence.create({
           data,
         });
       }
     
-      async update(id: number, data: { nom?: string; ville?: string; pays?: string }) {
+      async update(id: number, data: IAgence) {
         return this.prisma.agence.update({
           where: { id },
           data,
