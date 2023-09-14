@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { spawnSync } from 'child_process';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { spawnSync } = require('child_process');
 
 // Exécutez la génération Prisma avant de démarrer l'application
 spawnSync('npx', ['prisma', 'generate'], { stdio: 'inherit' });
