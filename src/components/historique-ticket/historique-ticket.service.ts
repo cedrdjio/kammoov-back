@@ -1,7 +1,7 @@
 // historique-ticket.service.ts
 import { Injectable } from '@nestjs/common';
 import { IHistoriqueTicket } from 'src/model/ihistoriqueTicket';
-import { PrismaService } from 'src/services/prisma.service';
+import { PrismaService } from 'src/components/prisma/prisma.service';
 
 @Injectable()
 export class HistoriqueTicketService {

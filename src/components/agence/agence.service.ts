@@ -5,7 +5,7 @@ https://docs.nestjs.com/providers#services
 // eslint-disable-next-line prettier/prettier
 import { Injectable } from '@nestjs/common';
 import { IAgence } from 'src/model/iagence';
-import { PrismaService } from 'src/services/prisma.service';
+import { PrismaService } from 'src/components/prisma/prisma.service';
 
 @Injectable()
 export class AgenceService {

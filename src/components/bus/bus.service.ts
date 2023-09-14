@@ -5,7 +5,7 @@ https://docs.nestjs.com/providers#services
 
 import { Injectable } from '@nestjs/common';
 import { IBus } from 'src/model/ibus';
-import { PrismaService } from 'src/services/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class BusService {
