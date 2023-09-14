@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const { spawnSync } = require('child_process');
+const { execSync } = require('child_process');
 
-// Exécutez la génération Prisma avant de démarrer l'application
-spawnSync('npx', ['prisma', 'generate'], { stdio: 'inherit' });
+execSync('npm install -g prisma');  // Installe Prisma globalement
+execSync('prisma generate');  // Génère les fichiers clients Prisma
 
-// Ensuite, démarrez votre application Nest.js
+// Votre script de démarrage habituel
 require('./dist/main');
